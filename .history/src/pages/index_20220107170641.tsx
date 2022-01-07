@@ -17,14 +17,14 @@ const Auth: FC = () => {
 
     axios
       .get(
-        "http://localhost:3005/users/"
+        " http://localhost:3005/users/"
       )
 
       .then((data) => {
         // i supposed that nicknames are uniques so i can implement the login part :)
         const user = data.data
         .filter(user => user.nickname.toLowerCase() === nickname.toLowerCase())   
-        console.log("user ", user)
+        
         if (user && user.length > 0 ){
          
           setNickname(user[0].nickname)

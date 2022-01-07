@@ -28,7 +28,10 @@ export default function Chats() {
         
       );
     
-      setConversations(result.data);
+      let data = result.data.filter((conv)=>{
+        conv.recipientId != id
+      })
+      setConversations(data);
     };
     fetchData();
   },[])

@@ -3,7 +3,7 @@ import { Context } from "../context";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import axios from "axios";
-import ConversationsList from "../components/ConversationsList"
+import Conver
 
 
 
@@ -11,9 +11,13 @@ import ConversationsList from "../components/ConversationsList"
 export default function Chats() {
   const { nickname, id } = useContext(Context);
   const router = useRouter();
-  const [conversations, setConversations] = useState();
+  const [showChat, setShowChat] = useState(false);
 
-  console.log("id ",id)
+  useEffect(() => {
+    if (typeof document !== undefined) {
+      setShowChat(true);
+    }
+  }, []);
   useEffect(() => {
     if (nickname === "" || id === "") {
       router.push("/");
@@ -21,25 +25,25 @@ export default function Chats() {
   }, [nickname, id]);
 
   useEffect(() => {
-
     const fetchData = async () => {
       const result = await axios(
         `http://localhost:3005/conversations/${id}`,
         
       );
-    
-      setConversations(result.data);
+        console.log("convs ", result)
+      //setData(result.data);
     };
+
     fetchData();
+ 
+    
   },[])
 
-  
+  if (!showChat) return <div />;
   return (
     <div className="background">
       <div className="shadow">
-      <div className="ce-chat-engine" >
-        <ConversationsList conversations = {conversations}/>
-        </div>
+        <ConversationsList/>
         
       </div>
     </div>

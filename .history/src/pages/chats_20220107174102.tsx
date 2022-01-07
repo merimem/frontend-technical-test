@@ -13,7 +13,7 @@ export default function Chats() {
   const router = useRouter();
   const [conversations, setConversations] = useState();
 
-  console.log("id ",id)
+ 
   useEffect(() => {
     if (nickname === "" || id === "") {
       router.push("/");
@@ -21,13 +21,11 @@ export default function Chats() {
   }, [nickname, id]);
 
   useEffect(() => {
-
     const fetchData = async () => {
       const result = await axios(
         `http://localhost:3005/conversations/${id}`,
         
       );
-    
       setConversations(result.data);
     };
     fetchData();
@@ -37,9 +35,7 @@ export default function Chats() {
   return (
     <div className="background">
       <div className="shadow">
-      <div className="ce-chat-engine" >
         <ConversationsList conversations = {conversations}/>
-        </div>
         
       </div>
     </div>

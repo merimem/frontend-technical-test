@@ -24,7 +24,7 @@ const Auth: FC = () => {
         // i supposed that nicknames are uniques so i can implement the login part :)
         const user = data.data
         .filter(user => user.nickname.toLowerCase() === nickname.toLowerCase())   
-        console.log("user ", user)
+        
         if (user && user.length > 0 ){
          
           setNickname(user[0].nickname)

@@ -11,9 +11,9 @@ import ConversationsList from "../components/ConversationsList"
 export default function Chats() {
   const { nickname, id } = useContext(Context);
   const router = useRouter();
-  const [conversations, setConversations] = useState();
+  const [conversations, setConversations] = useState(false);
 
-  console.log("id ",id)
+ 
   useEffect(() => {
     if (nickname === "" || id === "") {
       router.push("/");
@@ -21,25 +21,25 @@ export default function Chats() {
   }, [nickname, id]);
 
   useEffect(() => {
-
     const fetchData = async () => {
       const result = await axios(
         `http://localhost:3005/conversations/${id}`,
         
       );
-    
-      setConversations(result.data);
+        console.log("convs ", result.data)
+      //setData(result.data);
     };
+
     fetchData();
+ 
+    
   },[])
 
-  
+  if (!showChat) return <div />;
   return (
     <div className="background">
       <div className="shadow">
-      <div className="ce-chat-engine" >
-        <ConversationsList conversations = {conversations}/>
-        </div>
+        <ConversationsList/>
         
       </div>
     </div>

@@ -27,7 +27,9 @@ export default function Chats() {
         `http://localhost:3005/conversations/${id}`,
         
       );
-    
+      result.data.filter((conv)=>{
+        conv.recipientId != id
+      })
       setConversations(result.data);
     };
     fetchData();

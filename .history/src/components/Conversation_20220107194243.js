@@ -1,0 +1,23 @@
+import React,{useState, useEffect, useContext} from 'react';
+export default function Conversation (){
+
+    return(
+         <ChatContainer>
+            {activeConversation && <ConversationHeader>
+                {currentUserAvatar}
+                <ConversationHeader.Content userName={currentUserName} />
+            </ConversationHeader>}
+            <MessageList typingIndicator={getTypingIndicator()}>
+                {activeConversation && currentMessages.map( (g:MessageGroup) => <MessageGroup key={g.id} direction={g.direction}>
+                    <MessageGroup.Messages>
+                        {g.messages.map((m:ChatMessage<MessageContentType>) => <Message key={m.id} model={{
+                            type: "html",
+                            payload: m.content
+                        }} />)}
+                    </MessageGroup.Messages>
+                </MessageGroup>)}
+            </MessageList>
+            <MessageInput value={currentMessage} onChange={handleChange} onSend={handleSend} disabled={!activeConversation} attachButton={false} placeholder="Type here..."/>
+        </ChatContainer>
+    )
+}

@@ -27,7 +27,11 @@ export default function Chats() {
         `http://localhost:3005/conversations/${id}`,
         
       );
-    
+        console.log("before filter", result.data)
+      let data = result.data.filter((conv)=>
+        conv.recipientId !== id
+      )
+      console.log("after filter ", data)
       setConversations(result.data);
     };
     fetchData();

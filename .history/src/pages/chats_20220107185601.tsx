@@ -27,7 +27,6 @@ export default function Chats() {
         `http://localhost:3005/conversations/${id}`,
         
       );
-    
       setConversations(result.data);
     };
     fetchData();
