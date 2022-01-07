@@ -13,7 +13,7 @@ export default function Chats() {
   const router = useRouter();
   const [conversations, setConversations] = useState();
 
-  console.log("id ",id)
+  
   useEffect(() => {
     if (nickname === "" || id === "") {
       router.push("/");

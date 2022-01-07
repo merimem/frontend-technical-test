@@ -3,3 +3,7 @@
 * {
   font-family: Quicksand !important;
 }
+
+.error-login{
+  color: #5e0202;
+}

@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import { Context } from '../context';
 import { useRouter } from 'next/router';
 import axios from "axios";
@@ -9,11 +9,17 @@ import styles from '../styles/Home.module.css'
 const Auth: FC = () => {
   
   const { nickname, setNickname, id, setId } = useContext(Context);
+  const [error , setError] = useState("")
   const router = useRouter();
   function onSubmit(e) {
     e.preventDefault();
 
-    if (nickname.length === 1) return;
+    if (nickname.length === 0) {
+      setError("Please enter your username !");
+      return;
+
+    }
+      
 
     axios
       .get(
@@ -21,7 +27,7 @@ const Auth: FC = () => {
       )
 
       .then((data) => {
-        // i supposed that nicknames are uniques so i can implement the login part :)
+        // i am supposing that nicknames are uniques so i can implement the login part :)
         const user = data.data
         .filter(user => user.nickname.toLowerCase() === nickname.toLowerCase())   
         console.log("user ", user)
@@ -30,6 +36,8 @@ const Auth: FC = () => {
           setNickname(user[0].nickname)
           setId(user[0].id)
           router.push("/chats");
+        }else {
+          setError("Invalid username !")
         }
         
       });
@@ -44,8 +52,9 @@ const Auth: FC = () => {
             <input
               placeholder="Nickname"
               className="text-input"
-              onChange={(e) => setNickname(e.target.value)}
+              onChange={(e) => {setNickname(e.target.value); setError("");}}
             />
+            <p className = "error-login">{error}</p>
           </div>
 
           

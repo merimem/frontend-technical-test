@@ -5,26 +5,38 @@ import {Avatar, ChatContainer, ConversationHeader, MessageGroup, Message,Message
 export default function MessagesList (props){
     let [messages, setMessages] = useState()
     const { nickname, id } = useContext(Context); 
-    let {idActiveConversation} = props
-    console.log("idActiveConversation ",idActiveConversation)
+    let {activeConversation} = props
+    
     useEffect(() => {
+      if(activeConversation){
         const fetchData = async () => {
           const result = await axios(
-            `http://localhost:3005/messages/${idActiveConversation}`          
+            `http://localhost:3005/messages/${activeConversation.id}`          
           );
           console.log("messages:  ", result.data)
           setMessages(result.data);
         };
         fetchData();
-      },[idActiveConversation])
-    return(
+      }
+       
+      },[props.activeConversation])
+      
+      const fetchNameOtherUser = () => {
+         let x = activeConversation.recipientNickname == nickname ? activeConversation.senderNickname : activeConversation.recipientNickname
+  
+         return x;
+        }
+      if(!messages || !activeConversation) 
+         return("")
+      
+      return(
          <ChatContainer>
              <ConversationHeader>
              <Avatar src = "https://chatscope.io/storybook/react/static/media/zoe.e31a4ff8.svg" 
                     name={nickname }  
                     className="avatar" 
                     />
-                <ConversationHeader.Content userName={nickname} />
+                <ConversationHeader.Content userName={fetchNameOtherUser()} />
             </ConversationHeader>
              <MessageList >
                 { messages && messages.map( (g) => 
@@ -41,5 +53,5 @@ export default function MessagesList (props){
             {/* <MessageInput value={currentMessage} onChange={handleChange} onSend={handleSend} disabled={!activeConversation} attachButton={false} placeholder="Type here..."/> */}
         </ChatContainer>
 
-    )
+    ) 
 }

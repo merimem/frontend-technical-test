@@ -11,11 +11,14 @@ import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 
 export default function ConversationsList(props) {
     const { nickname, id } = useContext(Context); 
-    let [activeConversation, setActiveConversation] = useState(1)
+    let [activeConversation, setActiveConversation] = useState({})
     let {conversations } = props
    
    
-
+    useEffect(()=>{
+        console.log("useEffect conversaitonslist")
+        conversations && setActiveConversation(conversations[0])
+    }, [conversations])
         
     const getDate = (tmp)=>{      
         var date = new Date(tmp * 1000);
@@ -48,8 +51,8 @@ export default function ConversationsList(props) {
                             return <Conversation key={conv.id}
                                     name={conv.recipientNickname == nickname ? conv.senderNickname : conv.recipientNickname }
                                     info={getDate(conv.lastMessageTimestamp)}
-                                    active={activeConversation === conv.id}
-                                    onClick={() => setActiveConversation(conv.id)}>
+                                    active={activeConversation.id === conv.id}
+                                    onClick={() => setActiveConversation(conv)}>
                                 {}
                             </Conversation>
                         }) 
@@ -61,7 +64,7 @@ export default function ConversationsList(props) {
          
             </ConversationList>
         </Sidebar>
-        <MessagesList idActiveConversation = {activeConversation} />
+        <MessagesList activeConversation = {activeConversation} />
         </MainContainer>
          
 </div>
