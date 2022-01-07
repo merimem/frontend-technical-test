@@ -8,34 +8,7 @@ import styles from '../styles/Home.module.css'
 
 const Auth: FC = () => {
   
-  const { nickname, setNickname, id, setId } = useContext(Context);
-  const router = useRouter();
-  function onSubmit(e) {
-    e.preventDefault();
-
-    if (nickname.length === 1) return;
-
-    axios
-      .get(
-        " http://localhost:3005/users/"
-      )
-
-      .then((data) => {
-        console.log("ftch ",data)
-        // i supposed that nicknames are uniques so i can implement the login part :)
-        const user = data.data
-        .filter(user => user.nickname.toLowerCase() === nickname.toLowerCase())
-        
-        
-        if (user && user.length > 0 ){
-         
-          setNickname(user[0].nickname)
-          setId(user[0].id)
-          router.push("/chats");
-        }
-        
-      });
-  }
+  const { nickname, setNickname } = useContext(Context);
   return (
     <div className="background">
       <div className="auth-container">

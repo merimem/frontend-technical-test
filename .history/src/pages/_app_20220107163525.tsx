@@ -9,12 +9,7 @@ import {ContextProvider} from "../context"
 export const loggedUserId = getLoggedUserId()
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <ContextProvider >
-      <Component {...pageProps} />
-    </ContextProvider>
-  )
-   
+  return <Component {...pageProps} />
 }
 
 export default MyApp

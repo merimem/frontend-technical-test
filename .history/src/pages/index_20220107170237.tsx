@@ -8,7 +8,7 @@ import styles from '../styles/Home.module.css'
 
 const Auth: FC = () => {
   
-  const { nickname, setNickname, id, setId } = useContext(Context);
+  const { nickname, setNickname } = useContext(Context);
   const router = useRouter();
   function onSubmit(e) {
     e.preventDefault();
@@ -22,18 +22,14 @@ const Auth: FC = () => {
 
       .then((data) => {
         console.log("ftch ",data)
-        // i supposed that nicknames are uniques so i can implement the login part :)
+        // i supposed that nicknames are uniques
         const user = data.data
         .filter(user => user.nickname.toLowerCase() === nickname.toLowerCase())
-        
-        
-        if (user && user.length > 0 ){
-         
+        .shift()
+        if (user.length >1 ){
           setNickname(user[0].nickname)
-          setId(user[0].id)
-          router.push("/chats");
         }
-        
+        //router.push("/chats");
       });
   }
   return (

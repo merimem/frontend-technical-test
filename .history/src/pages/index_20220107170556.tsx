@@ -31,9 +31,8 @@ const Auth: FC = () => {
          
           setNickname(user[0].nickname)
           setId(user[0].id)
-          router.push("/chats");
         }
-        
+        //router.push("/chats");
       });
   }
   return (
