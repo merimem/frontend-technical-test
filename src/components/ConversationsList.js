@@ -12,24 +12,22 @@ import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 function ConversationsList(props) {
     const { nickname, id } = useContext(Context); 
     let [activeConversation, setActiveConversation] = useState({})
-    let [avatars, setAvatars] = useState([])
 
     let {conversations } = props
     console.log("props of ConversationsList ", props)
    
     useEffect(()=>{
         conversations && setActiveConversation(conversations[0])
+        let allNicknames = [nickname]
+        conversations && conversations.map(conv =>{
+            let pseudo = conv.recipientNickname == nickname ? conv.senderNickname : conv.recipientNickname 
+            allNicknames.push(pseudo)
+        })
+        props.getAllAvatars(allNicknames) 
     }, [conversations])
-     useEffect(()=>{
-        props.getAllAvatars([nickname]) 
-        console.log("useEffect avatars ", props.avatars)
-       
-    }, []   ) 
+    
     const getUrlAvatar  = (nickname) =>{ 
-        console.log("getUrlAvatar nickname",nickname) 
-       // props.getAllAvatars([nickname])      
         let avatar = props.allAvatars.filter((avatar)=>avatar.nickname.toLowerCase() === nickname.toLowerCase()).shift()
-        console.log("getUrlAvatar avatar ", avatar)
         if(avatar)
             return avatar.avatar;
         else
@@ -63,12 +61,14 @@ function ConversationsList(props) {
                 
                     {conversations?
                          conversations.map(conv =>{
+                            let pseudoname = conv.recipientNickname == nickname ? conv.senderNickname : conv.recipientNickname
+                            
                             return <Conversation key={conv.id}
-                                    name={conv.recipientNickname == nickname ? conv.senderNickname : conv.recipientNickname }
+                                    name={pseudoname }
                                     info={getDate(conv.lastMessageTimestamp)}
                                     active={activeConversation.id === conv.id}
                                     onClick={() => setActiveConversation(conv)}>
-                                    <Avatar src={getUrlAvatar(conv.recipientNickname == nickname ? conv.senderNickname : conv.recipientNickname)} name="Lilly" />            
+                                    <Avatar src={getUrlAvatar(pseudoname)} name="Lilly" />            
                             </Conversation>
                         }) 
                         :  ""
@@ -79,7 +79,7 @@ function ConversationsList(props) {
          
             </ConversationList>
         </Sidebar>
-        <MessagesList activeConversation = {activeConversation} />
+        <MessagesList activeConversation = {activeConversation} urlAvatar = {getUrlAvatar(activeConversation.recipientNickname == nickname ? activeConversation.senderNickname : activeConversation.recipientNickname)} />
         </MainContainer>
          
 </div>

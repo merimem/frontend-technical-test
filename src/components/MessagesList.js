@@ -7,8 +7,8 @@ import {Avatar, ChatContainer, ConversationHeader, MessageGroup, Message,Message
  function MessagesList (props){
     let [messages, setMessages] = useState()
     const { nickname, id } = useContext(Context); 
-    let {activeConversation} = props
-    
+    let {activeConversation, urlAvatar} = props
+    console.log("MessagesList props", props)
     useEffect(() => {
       if(activeConversation){
         const fetchData = async () => {
@@ -35,7 +35,7 @@ import {Avatar, ChatContainer, ConversationHeader, MessageGroup, Message,Message
       return(
          <ChatContainer>
              <ConversationHeader>
-             <Avatar src = "https://chatscope.io/storybook/react/static/media/zoe.e31a4ff8.svg" 
+             <Avatar src = {urlAvatar} 
                     name={nickname }  
                     className="avatar" 
                     />
