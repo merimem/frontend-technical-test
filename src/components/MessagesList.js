@@ -1,8 +1,10 @@
 import React,{useState, useEffect, useContext} from 'react';
 import { Context } from "../context";
 import axios from "axios";
+import { connect } from "react-redux";
+import { getAllAvatars } from "../redux/actions/userActions"
 import {Avatar, ChatContainer, ConversationHeader, MessageGroup, Message,MessageList, MessageInput, TypingIndicator } from "@chatscope/chat-ui-kit-react";
-export default function MessagesList (props){
+ function MessagesList (props){
     let [messages, setMessages] = useState()
     const { nickname, id } = useContext(Context); 
     let {activeConversation} = props
@@ -20,6 +22,7 @@ export default function MessagesList (props){
       }
        
       },[props.activeConversation])
+     
       
       const fetchNameOtherUser = () => {
          let x = activeConversation.recipientNickname == nickname ? activeConversation.senderNickname : activeConversation.recipientNickname
@@ -55,3 +58,13 @@ export default function MessagesList (props){
 
     ) 
 }
+const mapStateToProps = state => {
+  return {avatar: state.user.avatar} 
+}
+const mapDispacthToProps = (dispatch) => {
+  return {
+      getAvatar : (nickname)=> dispatch(getAvatar(nickname))
+  }
+}
+
+export default connect(mapStateToProps, mapDispacthToProps)(MessagesList)

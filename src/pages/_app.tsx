@@ -3,7 +3,9 @@ import { getLoggedUserId } from '../utils/getLoggedUserId'
 import "../styles/auth.css";
 import "../styles/chats.css";
 import "../styles/index.css";
-import {ContextProvider} from "../context"
+import {ContextProvider} from "../context";
+import { wrapper } from "../redux/store";
+
 
 // Default way to get a logged user
 export const loggedUserId = getLoggedUserId()
@@ -16,5 +18,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   )
    
 }
-
-export default MyApp
+export default wrapper.withRedux(MyApp);

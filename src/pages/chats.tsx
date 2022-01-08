@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../context";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import axios from "axios";
 import ConversationsList from "../components/ConversationsList"
