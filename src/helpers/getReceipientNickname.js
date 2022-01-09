@@ -1,7 +1,8 @@
-import { useContext} from 'react';
-import { Context } from "../context";
+
 
 const getReceipientNickname = (conversation, nickname)=>{
-        return conversation.recipientNickname == nickname ? conversation.senderNickname : conversation.recipientNickname
+        console.log("getReceipientNickname ", conversation, nickname)
+      
+        return conversation.recipientNickname.toLowerCase() == nickname.toLowerCase() ? conversation.senderNickname : conversation.recipientNickname
 }
 export default getReceipientNickname;

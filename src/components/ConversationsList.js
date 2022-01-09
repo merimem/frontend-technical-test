@@ -1,11 +1,8 @@
 import React,{useState, useEffect, useContext} from 'react';
-import { Context } from "../context";
-import { connect } from "react-redux";
 import { getAllAvatars } from "../redux/actions/userActions"
 import  MessagesList  from './MessagesList';
-import {Loader, Avatar,  MainContainer, Sidebar, ConversationList, Conversation, ChatContainer, ConversationHeader, MessageGroup, Message,MessageList, MessageInput, TypingIndicator } from "@chatscope/chat-ui-kit-react";
+import {Loader, Avatar,  MainContainer, Sidebar, ConversationList, Conversation, ChatContainer, ConversationHeader } from "@chatscope/chat-ui-kit-react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
-import useGetConversations from '../hooks/useGetConversations';
 import useGetAllNicknames from '../hooks/useGetAllNicknames';
 import getDateFromTimestamp from '../helpers/getDateFromTimestamp'
 import getReceipientNickname from "../helpers/getReceipientNickname";
@@ -15,8 +12,9 @@ function ConversationsList(props) {
     const state = useReduxState();
     const dispatch = useReduxDispatch();
     const { nickname, id, allAvatars, conversations } = state.user; 
+    console.log("nickname ",nickname)
     const [activeConversation, setActiveConversation] = useState()
-    if(id =="" )
+    if(id == "" || nickname == "" )
         return null  
     const allNicknames = useGetAllNicknames(conversations)
     
@@ -32,6 +30,7 @@ function ConversationsList(props) {
      
     
     const getUrlAvatar  = (nickname) =>{ 
+        console.log(" getUrlAvatar nickname ",nickname, allAvatars)
         let avatar =  allAvatars.filter((avatar)=>avatar.nickname.toLowerCase() === nickname.toLowerCase()).shift()
         if(avatar)
             return avatar.avatar;
@@ -65,14 +64,14 @@ function ConversationsList(props) {
                 
                     {conversations?
                          conversations.map(conv =>{
-                            let pseudoname = conv.recipientNickname == nickname ? conv.senderNickname : conv.recipientNickname
-                            
+                            let pseudoname = conv.recipientNickname.toLowerCase() == nickname.toLowerCase() ? conv.senderNickname : conv.recipientNickname
+                            console.log("pseudoname ", pseudoname, conv)
                             return <Conversation key={conv.id}
                                     name={getReceipientNickname(conv, nickname) }
                                     info={getDateFromTimestamp(conv.lastMessageTimestamp)}
                                     active={activeConversation.id === conv.id}
                                     onClick={() => setActiveConversation(conv)}>
-                                    <Avatar src={getUrlAvatar(pseudoname)} name="Lilly" />            
+                                    <Avatar src={getUrlAvatar(pseudoname)} name={pseudoname}/>            
                             </Conversation>
                         }) 
                         :  ""
@@ -83,7 +82,7 @@ function ConversationsList(props) {
          
             </ConversationList>
         </Sidebar>
-          <MessagesList activeConversation = {activeConversation} urlAvatar = {getUrlAvatar(getReceipientNickname(activeConversation))} />  
+          <MessagesList activeConversation = {activeConversation} urlAvatar = {getUrlAvatar(getReceipientNickname(activeConversation, nickname))} />  
         </MainContainer> 
          
 </div>

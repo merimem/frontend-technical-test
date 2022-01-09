@@ -166,3 +166,9 @@
   background-color: white !important;
   border-radius: 0px !important;
 }
+
+@media (max-width: 576px){
+  .cs-main-container--responsive>.cs-sidebar.cs-sidebar--left {
+    display: block !important;
+}
+}

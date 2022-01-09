@@ -31,7 +31,7 @@ function MessagesList (props){
     } 
       
    
-  
+    console.log("urlAvatar ",urlAvatar)
     return(
          <ChatContainer>
              <ConversationHeader>
@@ -39,7 +39,7 @@ function MessagesList (props){
                     name={nickname }  
                     className="avatar" 
                     />
-                <ConversationHeader.Content userName={getReceipientNickname(activeConversation)} />
+                <ConversationHeader.Content userName={getReceipientNickname(activeConversation, nickname)} />
             </ConversationHeader>
              <MessageList >
                 {  messages.map( (g) => 

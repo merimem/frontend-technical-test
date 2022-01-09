@@ -1,6 +1,5 @@
 
 import * as t from "../types";
-let url = "http://localhost:3005/messages/"
 export const addMessage = (content, idConv, idUser)  => {
   return  (dispatch, getState) => {
     

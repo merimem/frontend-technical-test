@@ -3,7 +3,6 @@ import { getLoggedUserId } from '../utils/getLoggedUserId'
 import "../styles/auth.css";
 import "../styles/chats.css";
 import "../styles/index.css";
-import {ContextProvider} from "../context";
 import store from '../redux/store';
 import { ReduxProvider, useReduxState, useReduxDispatch } from '../redux/redux-bindings';
 
