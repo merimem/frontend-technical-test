@@ -29,7 +29,9 @@ const Auth: FC = () => {
     <div className="background">
       <div className="auth-container">
         <form className="auth-form" onSubmit={(e) => handleSubmit(e)}>
-          <div className="auth-title">Leboncoin Chat</div>
+          <div className="auth-title">
+            <img className="auth-title-img" src="https://upload.wikimedia.org/wikipedia/commons/6/63/Leboncoin_Logo_%282016%29.svg"/>
+          </div>
 
           <div className="input-container">
             <input
