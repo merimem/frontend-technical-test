@@ -1,24 +1,33 @@
 import * as t from "../types";
 
+export const setId = () =>{
+  console.log("setId ",state)
+
+}
 export const getAllAvatars = (nicknames)  => {
- 
-  console.log("1 getAllAvatars nickname ",nicknames)
   let avatars = []
   return async  (dispatch) => {
-    const reqs = await nicknames.map(async (nickname)=>{
+    try{
+      const reqs = await nicknames.map(async (nickname)=>{
         let response = await fetch(`https://eu.ui-avatars.com/api/?name=${nickname}`)
-        console.log(" 2 getAllAvatars pushing", {nickname: nickname, avatar: response.url})
         avatars.push({nickname: nickname, avatar: response.url})
         return;
        
-    })
-     Promise.all(reqs).then(() => {
-      console.log("3 getAllAvatars map finish")
-      return dispatch(
-        { type: "GET_ALL_AVATARS",
-          allAvatars:avatars 
+      })
+      Promise.all(reqs).then(() => {
+        return dispatch(
+          { type: "GET_ALL_AVATARS",
+            allAvatars:avatars 
         })
-    });
+      });
+
+    }catch(err){
+      return dispatch(
+        { type: "GET_ALL_AVATARS_ERROR",
+          error:err 
+      })
+    } 
+    
    
       
 
@@ -27,14 +36,7 @@ export const getAllAvatars = (nicknames)  => {
     
     
 
-   /*  return fetch(`https://eu.ui-avatars.com/api/?name=${nickname}`)
-    .then(response => {
-      return response.url
-    })
-    .then(url => dispatch(
-                  { type: "GET_ALL_AVATARS",
-                  allAvatars: url })
-        )*/
+   
       } 
   
-  }
+}

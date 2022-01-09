@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../context";
 import { useRouter } from "next/router";
-import axios from "axios";
+
 import ConversationsList from "../components/ConversationsList"
 
 
@@ -19,25 +19,13 @@ export default function Chats() {
     }
   }, [nickname, id]);
 
-  useEffect(() => {
-
-    const fetchData = async () => {
-      const result = await axios(
-        `http://localhost:3005/conversations/${id}`,
-        
-      );
-    
-      setConversations(result.data);
-    };
-    fetchData();
-  },[])
-
+ 
   
   return (
     <div className="background">
       <div className="shadow">
       <div className="ce-chat-engine" >
-        <ConversationsList conversations = {conversations}/>
+        <ConversationsList />
         </div>
         
       </div>

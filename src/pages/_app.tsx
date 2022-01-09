@@ -4,7 +4,8 @@ import "../styles/auth.css";
 import "../styles/chats.css";
 import "../styles/index.css";
 import {ContextProvider} from "../context";
-import { wrapper } from "../redux/store";
+import store from '../redux/store';
+import { ReduxProvider, useReduxState, useReduxDispatch } from '../redux/redux-bindings';
 
 
 // Default way to get a logged user
@@ -12,10 +13,10 @@ export const loggedUserId = getLoggedUserId()
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ContextProvider >
+    <ReduxProvider store={store}>
       <Component {...pageProps} />
-    </ContextProvider>
+      </ReduxProvider>
   )
    
 }
-export default wrapper.withRedux(MyApp);
+export default MyApp;

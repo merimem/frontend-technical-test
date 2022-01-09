@@ -1,45 +1,39 @@
-import React,{useState, useEffect, useContext} from 'react';
+import React,{useState, useEffect, useContext, useCallback} from 'react';
 import { Context } from "../context";
-import axios from "axios";
 import { connect } from "react-redux";
-import { getAllAvatars } from "../redux/actions/userActions"
-import {Avatar, ChatContainer, ConversationHeader, MessageGroup, Message,MessageList, MessageInput, TypingIndicator } from "@chatscope/chat-ui-kit-react";
- function MessagesList (props){
-    let [messages, setMessages] = useState()
+import { addMessage } from "../redux/actions/messageActions"
+import {Loader ,Avatar, ChatContainer, ConversationHeader, MessageGroup, Message,MessageList, MessageInput, TypingIndicator } from "@chatscope/chat-ui-kit-react";
+import useGetMessages from "../hooks/useGetMessages";
+import getReceipientNickname from "../helpers/getReceipientNickname"
+function MessagesList (props){
+    let [currentMessage, setCurrentMessage] = useState("")
     const { nickname, id } = useContext(Context); 
-    let {activeConversation, urlAvatar} = props
-    console.log("MessagesList props", props)
-    useEffect(() => {
-      if(activeConversation){
-        const fetchData = async () => {
-          const result = await axios(
-            `http://localhost:3005/messages/${activeConversation.id}`          
-          );
-          console.log("messages:  ", result.data)
-          setMessages(result.data);
-        };
-        fetchData();
-      }
-       
-      },[props.activeConversation])
-     
+    let {activeConversation, urlAvatar} = props;
+    if( !activeConversation) 
+      return(null)
+    const {  messages, loading, error } = useGetMessages(activeConversation); 
+   
+    const handleChange = (value)=>{
+        setCurrentMessage(value);
+    }
+
+    const handleSend = (content)=>{
+      props.addMessage(content, activeConversation.id, id)
+      setCurrentMessage("")
+      //fetchMessages()
+    }
       
-      const fetchNameOtherUser = () => {
-         let x = activeConversation.recipientNickname == nickname ? activeConversation.senderNickname : activeConversation.recipientNickname
+    if(loading)
+      return (<Loader />)
   
-         return x;
-        }
-      if(!messages || !activeConversation) 
-         return("")
-      
-      return(
+    return(
          <ChatContainer>
              <ConversationHeader>
              <Avatar src = {urlAvatar} 
                     name={nickname }  
                     className="avatar" 
                     />
-                <ConversationHeader.Content userName={fetchNameOtherUser()} />
+                <ConversationHeader.Content userName={getReceipientNickname(activeConversation)} />
             </ConversationHeader>
              <MessageList >
                 { messages && messages.map( (g) => 
@@ -53,17 +47,17 @@ import {Avatar, ChatContainer, ConversationHeader, MessageGroup, Message,Message
                     
                 </MessageGroup>)}
             </MessageList> 
-            {/* <MessageInput value={currentMessage} onChange={handleChange} onSend={handleSend} disabled={!activeConversation} attachButton={false} placeholder="Type here..."/> */}
+            <MessageInput value={currentMessage} onChange={handleChange} onSend={handleSend} disabled={!activeConversation} attachButton={false} placeholder="Type here..."/> 
         </ChatContainer>
 
     ) 
 }
 const mapStateToProps = state => {
-  return {avatar: state.user.avatar} 
+  return {message: state.message.content} 
 }
 const mapDispacthToProps = (dispatch) => {
   return {
-      getAvatar : (nickname)=> dispatch(getAvatar(nickname))
+      addMessage : (content, idConv)=> dispatch(addMessage(content,idConv))
   }
 }
 

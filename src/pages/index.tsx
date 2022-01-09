@@ -1,27 +1,31 @@
 import type { FC } from 'react'
-import React, {useContext, useState} from "react";
+import React, {useContext, useState, useEffect, useCallback} from "react";
 import { Context } from '../context';
 import { useRouter } from 'next/router';
+import { useDispatch } from "react-redux";
 import axios from "axios";
-import Logo from '../assets/lbc-logo.webp'
-import styles from '../styles/Home.module.css'
+import {  useReduxState, useReduxDispatch } from '../redux/redux-bindings';
+import { setUseProxies } from 'immer';
 
 const Auth: FC = () => {
   
-  const { nickname, setNickname, id, setId } = useContext(Context);
+  const state = useReduxState();
+  const dispatch = useReduxDispatch();
+ 
   const [error , setError] = useState("")
   const router = useRouter();
-  function onSubmit(e) {
+  useEffect(() => {}, [dispatch]);
+  function handleSubmit(e) {
     e.preventDefault();
-
-    if (nickname.length === 0) {
-      setError("Please enter your username !");
-      return;
-
+    if (state.user.nickname.length === 0) {
+        setError("Please enter your username !");
+        return;
+    } else{
+      dispatch({  type: 'setId' });
     }
       
 
-    axios
+  /*   axios
       .get(
         "http://localhost:3005/users/"
       )
@@ -40,19 +44,25 @@ const Auth: FC = () => {
           setError("Invalid username !")
         }
         
-      });
+      }); */
   }
+  console.log("state ",state.user)
+  console.log("props ",state.user)
   return (
     <div className="background">
       <div className="auth-container">
-        <form className="auth-form" onSubmit={(e) => onSubmit(e)}>
+        <form className="auth-form" onSubmit={(e) => handleSubmit(e)}>
           <div className="auth-title">Leboncoin Chat</div>
 
           <div className="input-container">
             <input
               placeholder="Nickname"
               className="text-input"
-              onChange={(e) => {setNickname(e.target.value); setError("");}}
+              value={state.user.nickname}
+              onChange={(event) => {
+                const nickname = event.target.value;
+                dispatch({ nickname, type: 'setNickname' });
+              }}
             />
             <p className = "error-login">{error}</p>
           </div>
