@@ -12,7 +12,6 @@ export default function Chats() {
   const router = useRouter();
   const [conversations, setConversations] = useState();
 
-  console.log("state ",state.user)
    useEffect(() => {
     if (state.user.nickname === "" || state.user.id === "") {
       router.push("/");

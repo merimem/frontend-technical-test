@@ -63,7 +63,6 @@ export const getAllAvatars = (nicknames)  => {
       })
     
       Promise.all(reqs).then(() => { 
-          console.log("getAllAvatars ",avatars)
         return dispatch(
           { type: "GET_ALL_AVATARS",
             allAvatars: [...avatars ] 
@@ -76,7 +75,6 @@ export const getAllAvatars = (nicknames)  => {
       
 
     
-    console.log("getAllAvatars avatars ", avatars)
     
     
 

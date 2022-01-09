@@ -2,7 +2,6 @@ import React,{useState, useEffect, useContext} from 'react';
 import { Context } from "../context";
 import { connect } from "react-redux";
 import { getAllAvatars } from "../redux/actions/userActions"
-import getRandomColor from '../helpers/getRandomColor';
 import  MessagesList  from './MessagesList';
 import {Loader, Avatar,  MainContainer, Sidebar, ConversationList, Conversation, ChatContainer, ConversationHeader, MessageGroup, Message,MessageList, MessageInput, TypingIndicator } from "@chatscope/chat-ui-kit-react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
@@ -46,7 +45,7 @@ function ConversationsList(props) {
     if (error) 
         handleError(error); */
     
-    console.log("ConversationsList conversations",conversations)
+  
     if(!activeConversation)
         return null;
     return (
@@ -57,7 +56,7 @@ function ConversationsList(props) {
             <Avatar src = {getUrlAvatar(nickname)} 
                     name={nickname }  
                     className="avatar" 
-                    color={getRandomColor()}/>
+                   />
                 <ConversationHeader.Content>
                     {nickname}
                 </ConversationHeader.Content>
@@ -84,19 +83,12 @@ function ConversationsList(props) {
          
             </ConversationList>
         </Sidebar>
-         {/* <MessagesList activeConversation = {activeConversation} urlAvatar = {getUrlAvatar(getReceipientNickname(activeConversation))} />  */}
+          <MessagesList activeConversation = {activeConversation} urlAvatar = {getUrlAvatar(getReceipientNickname(activeConversation))} />  
         </MainContainer> 
          
 </div>
     )
 }
-const mapStateToProps = state => {
-    return {allAvatars: state.user.allAvatars} 
-}
-const mapDispacthToProps = (dispatch) => {
-    return {
-        getAllAvatars : (nicknames)=> dispatch(getAllAvatars(nicknames))
-    }
-}
+
   
   export default ConversationsList

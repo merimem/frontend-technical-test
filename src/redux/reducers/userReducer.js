@@ -7,7 +7,6 @@ export const initState = {
   conversations : []
 }
 export const userReducer = (state = initState, action) => {
-  console.log("userReducer action", action)
   switch(action.type){
       case 'setNickname':
         return { ...state, nickname: action.nickname };
@@ -17,8 +16,6 @@ export const userReducer = (state = initState, action) => {
         return { ...state, conversations : action.conversations};
       
       case 'GET_ALL_AVATARS':  
-        console.log('GET_ALL_AVATARS ',Object.assign({}, state, {
-          allAvatars: [...action.allAvatars]}))
         return Object.assign({}, state, {
           allAvatars: [...action.allAvatars]})
           //return {...state, allAvatars: action.allAvatars};
