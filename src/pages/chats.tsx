@@ -1,31 +1,31 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Context } from "../context";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-
 import ConversationsList from "../components/ConversationsList"
-
+import {  useReduxState, useReduxDispatch } from '../redux/redux-bindings';
 
 
 
 export default function Chats() {
-  const { nickname, id } = useContext(Context);
+  const state = useReduxState();
+
+  //const { nickname, id } = useContext(Context);
   const router = useRouter();
   const [conversations, setConversations] = useState();
 
-  
-  useEffect(() => {
-    if (nickname === "" || id === "") {
+  console.log("state ",state.user)
+   useEffect(() => {
+    if (state.user.nickname === "" || state.user.id === "") {
       router.push("/");
     }
-  }, [nickname, id]);
-
+  }, [state.user]);
+ 
  
   
   return (
     <div className="background">
       <div className="shadow">
       <div className="ce-chat-engine" >
-        <ConversationsList />
+         <ConversationsList /> 
         </div>
         
       </div>
