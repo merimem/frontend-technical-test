@@ -22,10 +22,10 @@ const Auth: FC = () => {
   })
   useEffect(() => {}, [dispatch]);
   useEffect(() => {
-    console.log("update ", state.user.redirectTo!="" , "$$$",state.user.errorForm == "")
     if (state.user.redirectTo!="" && state.user.errorForm == "") {
-      return Router.push("/chats");
+       Router.push("/chats");
     }
+   
   }, [update]); 
 
   /*  if (state.user.redirectTo) {
