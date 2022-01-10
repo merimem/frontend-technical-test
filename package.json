@@ -11,7 +11,7 @@
     "lint": "next lint --no-error-on-unmatched-pattern"
   },
   "engines": {
-    "node": ">=14.17.2"
+    "node": "14.17.6"
   },
   "dependencies": {
     "@chatscope/chat-ui-kit-react": "^1.8.3",
