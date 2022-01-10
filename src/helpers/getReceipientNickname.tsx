@@ -1,8 +1,6 @@
 
-
-const getReceipientNickname = (conversation, nickname)=>{
-        console.log("getReceipientNickname ", conversation, nickname)
-      
+import { Conversation } from '../types/conversation';
+const getReceipientNickname = (conversation: Conversation, nickname: string)=>{
         return conversation.recipientNickname.toLowerCase() == nickname.toLowerCase() ? conversation.senderNickname : conversation.recipientNickname
 }
 export default getReceipientNickname;

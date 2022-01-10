@@ -11,6 +11,7 @@ import { ReduxProvider, useReduxState, useReduxDispatch } from '../redux/redux-b
 export const loggedUserId = getLoggedUserId()
 
 function MyApp({ Component, pageProps }: AppProps) {
+  
   return (
     <ReduxProvider store={store}>
       <Component {...pageProps} />

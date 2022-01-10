@@ -167,6 +167,12 @@
   border-radius: 0px !important;
 }
 
+.conv-header{
+  display: flex;
+}
+.button-addConv{
+  padding: 15px 15px 15px 30px;
+}
 @media (max-width: 576px){
   .cs-main-container--responsive>.cs-sidebar.cs-sidebar--left {
     display: block !important;

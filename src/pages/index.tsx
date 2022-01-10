@@ -1,27 +1,49 @@
 import type { FC } from 'react'
 import React, { useState, useEffect} from "react";
-import { useRouter } from 'next/router';
+import Router  from 'next/router';
 import {  useReduxState, useReduxDispatch } from '../redux/redux-bindings';
-import { setId } from "../redux/actions/userActions";
+import { setUser } from "../redux/actions/userActions";
 
 const Auth: FC = () => {
   
   const state = useReduxState();
   const dispatch = useReduxDispatch();
   const [error , setError] = useState("")
-  const router = useRouter();
-
+  const [userName, setUserName ] = useState("")
+  const [update, setUpdate ] = useState(false)
+  //const router = useRouter();
+ 
+  const setUserInfo = ( ) => new Promise(async (resolve, reject) => {
+    await dispatch(setUser(userName))
+    .then(() => {
+      setUpdate(!update)
+    })
+    resolve("");
+  })
   useEffect(() => {}, [dispatch]);
+  useEffect(() => {
+    console.log("update ", state.user.redirectTo!="" , "$$$",state.user.errorForm == "")
+    if (state.user.redirectTo!="" && state.user.errorForm == "") {
+      return Router.push("/chats");
+    }
+  }, [update]); 
 
-  function handleSubmit(e) {
+  /*  if (state.user.redirectTo) {
+    return Router.push("/chats");;
+  }  */
+
+  async function handleSubmit(e) {
     e.preventDefault();
-    if (state.user.nickname.length === 0) {
+    console.log("handleSubmit ",e)
+  
+    if (!userName || userName.length === 0) {
+        console.log("nickname empty")
         setError("Please enter your username !");
-        return;
     } else{
       setError("");
-      dispatch(setId(state.user.nickname));
-      router.push("/chats");
+      console.log("state.user ",state.user)
+      setUserInfo()
+      
     }
   }
   
@@ -37,11 +59,12 @@ const Auth: FC = () => {
             <input
               placeholder="Nickname"
               className="text-input"
-              value={state.user.nickname}
+              value={userName}
               onChange={(event) => {
                 const nickname = event.target.value;
+                setUserName(nickname)
                 setError("");
-                dispatch({ nickname, type: 'setNickname' });
+               // dispatch({ nickname, type: 'setNickname' });
               }}
             />
             <p className = "error-login">{error || state.user.errorForm}</p>

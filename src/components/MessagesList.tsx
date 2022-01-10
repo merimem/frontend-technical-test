@@ -1,9 +1,11 @@
 import React,{useState, useEffect, useContext, useCallback} from 'react';
 import { addMessage } from "../redux/actions/messageActions"
-import {Loader ,Avatar, ChatContainer, ConversationHeader, MessageGroup, Message,MessageList, MessageInput, TypingIndicator } from "@chatscope/chat-ui-kit-react";
+import {Loader ,Avatar, ChatContainer, ConversationHeader,MessageList, MessageInput, TypingIndicator } from "@chatscope/chat-ui-kit-react";
 import getReceipientNickname from "../helpers/getReceipientNickname";
 import {  useReduxState, useReduxDispatch } from '../redux/redux-bindings';
 import { setMessages } from "../redux/actions/messageActions";
+import Message  from "./Message";
+
 function MessagesList (props){
     const state = useReduxState();
     const dispatch = useReduxDispatch();
@@ -13,8 +15,7 @@ function MessagesList (props){
     let {activeConversation, urlAvatar} = props;
     if( !activeConversation) 
       return(null)
-    console.log("staate ",state.message)
-   
+    
     useEffect(() => {}, [dispatch, state.messages]);
    
     useEffect(()=>{
@@ -43,15 +44,8 @@ function MessagesList (props){
             </ConversationHeader>
              <MessageList >
                 {  messages.map( (g) => 
-                    <MessageGroup key={g.id} direction={g.authorId == id ? "outgoing":"incoming"}>
-                    <MessageGroup.Messages>
-                       <Message key={"msg"+g.id} model={{
-                            type: "html",
-                            message: g.body
-                        }} />
-                        </MessageGroup.Messages>
-                    
-                </MessageGroup>)}
+                        <Message  key={g.id} content = {g} id = {id} />)
+                }
             </MessageList> 
             <MessageInput value={currentMessage} onChange={handleChange} onSend={handleSend} disabled={!activeConversation} attachButton={false} placeholder="Type here..."/> 
         </ChatContainer>
