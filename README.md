@@ -14,5 +14,10 @@ In this page, you can fin :
 - The avatars are generated with the API eu.ui-avatars.
 - If an error happens with the API, an alien avatar is displayed by default.
 
+# Link :
+You can test the App here:
+https://leboncoin-chat.herokuapp.com/chats
+
+
 
 Thank you !
