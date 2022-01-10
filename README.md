@@ -16,7 +16,10 @@ In this page, you can fin :
 
 # Link :
 You can test the App here:
-https://leboncoin-chat.herokuapp.com/chats
+1. Clone the project
+2. In the project folder run: npm run start-server
+3. And you can test here: https://leboncoin-chat.herokuapp.com/chats
+
 
 
 
