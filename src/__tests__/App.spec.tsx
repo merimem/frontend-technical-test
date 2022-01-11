@@ -1,11 +1,12 @@
-import { render, screen } from "@testing-library/react"
-import App from "../pages"
+import { render, screen } from '@testing-library/react';
 
-describe("App", () => {
-  it("should render correctly App", () => {
-    render(<App />)
+import App from '../pages/index';
+
+describe('Should render the app without crashing', () => {
+  it('Renders the home page', () => {
+    render(<App />);
     expect(
-      screen.getByText(/Welcome/)
-    ).toBeInTheDocument()
-  })
-})
+      screen.getByRole('button', { name: 'button-submit' })
+    ).toBeInTheDocument();
+  });
+});

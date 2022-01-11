@@ -49,7 +49,7 @@ const Auth: FC = () => {
   
   return (
     <div className="background">
-      <div className="auth-container">
+      <div className="auth-container" role="formAuth">
         <form className="auth-form" onSubmit={(e) => handleSubmit(e)}>
           <div className="auth-title">
             <img className="auth-title-img" src="https://upload.wikimedia.org/wikipedia/commons/6/63/Leboncoin_Logo_%282016%29.svg"/>
@@ -72,7 +72,7 @@ const Auth: FC = () => {
 
           
 
-          <button type="submit" className="submit-button">
+          <button type="submit" className="submit-button" aria-label="button-submit">
             Login 
           </button>
         </form>
