@@ -15,8 +15,12 @@ In this page, you can fin :
 - If an error happens with the API, an alien avatar is displayed by default.
 
 # Link :
-You can test the App here:
-https://leboncoin-chat.herokuapp.com/chats
+Plz follow this steps to test the app in heroku :
+1. Clone the project
+2. In the project folder run: npm run start-server
+3. test here: https://leboncoin-chat.herokuapp.com/chats 
+4. // or run npm run start
+
 
 
 
