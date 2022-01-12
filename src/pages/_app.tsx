@@ -4,7 +4,7 @@ import "../styles/auth.css";
 import "../styles/chats.css";
 import "../styles/index.css";
 import store from '../redux/store';
-import { ReduxProvider, useReduxState, useReduxDispatch } from '../redux/redux-bindings';
+import { ReduxProvider } from '../redux/redux-bindings';
 
 
 // Default way to get a logged user

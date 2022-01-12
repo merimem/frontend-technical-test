@@ -11,23 +11,9 @@
   text-align: left;
    background-color: white;
 }
-.ce-chats-container {
-  background-color: #4a5162 !important;
-  border-radius: 0px !important;
-}
 
-.ce-chat-form-container {
-  background-color: #4a5162 !important;
-  color: white;
-}
 
-.ce-chat-card {
-  margin: 0px 6px !important;
-}
 
-.ce-chat-card-loading-bar {
-  background-color: #535a6d !important;
-}
 
 .ce-active-chat-card {
   background-color: #726dfe !important;
@@ -165,6 +151,12 @@
 .ce-autocomplete-close {
   background-color: white !important;
   border-radius: 0px !important;
+}
+.cs-main-container>.cs-sidebar.cs-sidebar--left{
+  background-color: #9a97fc30 !important
+}
+.cs-conversation-header{
+  background-color: #4a516266;
 }
 
 .conv-header{

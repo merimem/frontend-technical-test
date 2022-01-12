@@ -3,6 +3,8 @@ import React, { useState, useEffect} from "react";
 import Router  from 'next/router';
 import {  useReduxState, useReduxDispatch } from '../redux/redux-bindings';
 import { setUser } from "../redux/actions/userActions";
+import Head from 'next/head'
+import Layout, { siteTitle } from '../components/layout'
 
 const Auth: FC = () => {
   
@@ -28,13 +30,9 @@ const Auth: FC = () => {
    
   }, [update]); 
 
-  /*  if (state.user.redirectTo) {
-    return Router.push("/chats");;
-  }  */
-
+  
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("handleSubmit ",e)
   
     if (!userName || userName.length === 0) {
         console.log("nickname empty")
@@ -48,36 +46,40 @@ const Auth: FC = () => {
   }
   
   return (
-    <div className="background">
-      <div className="auth-container" role="formAuth">
-        <form className="auth-form" onSubmit={(e) => handleSubmit(e)}>
-          <div className="auth-title">
-            <img className="auth-title-img" src="https://upload.wikimedia.org/wikipedia/commons/6/63/Leboncoin_Logo_%282016%29.svg"/>
-          </div>
+    <Layout >
+      <Head>
+          <title>{siteTitle}</title>
+        </Head>
+     
+        <div className="auth-container" role="formAuth">
+          <form className="auth-form" onSubmit={(e) => handleSubmit(e)}>
+            <div className="auth-title">
+              <img className="auth-title-img" src="https://upload.wikimedia.org/wikipedia/commons/6/63/Leboncoin_Logo_%282016%29.svg"/>
+            </div>
 
-          <div className="input-container">
-            <input
-              placeholder="Nickname"
-              className="text-input"
-              value={userName}
-              onChange={(event) => {
-                const nickname = event.target.value;
-                setUserName(nickname)
-                setError("");
-               // dispatch({ nickname, type: 'setNickname' });
-              }}
-            />
-            <p className = "error-login">{error || state.user.errorForm}</p>
-          </div>
+            <div className="input-container">
+              <input
+                placeholder="Nickname"
+                className="text-input"
+                value={userName}
+                onChange={(event) => {
+                  const nickname = event.target.value;
+                  setUserName(nickname)
+                  setError("");
+                }}
+              />
+              <p className = "error-login">{error || state.user.errorForm}</p>
+            </div>
 
-          
+            
 
-          <button type="submit" className="submit-button" aria-label="button-submit">
-            Login 
-          </button>
-        </form>
-      </div>
-    </div>
+            <button type="submit" className="submit-button" aria-label="button-submit">
+              Login 
+            </button>
+          </form>
+        </div>
+     
+    </Layout>
   )
 }
 

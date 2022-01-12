@@ -1,12 +1,18 @@
-import { render, screen } from '@testing-library/react';
+import { mount } from 'enzyme';
+import App from "../pages";
 
-import App from '../pages/index';
+describe("App", () => {
+  const wrapper = mount(<App />);
 
-describe('Should render the app without crashing', () => {
-  it('Renders the home page', () => {
-    render(<App />);
-    expect(
-      screen.getByRole('button', { name: 'button-submit' })
-    ).toBeInTheDocument();
+  it('should render form', () => {
+    expect(wrapper.find('.auth-container')).toHaveLength(1);
   });
-});
+
+ /*  it('should render main', () => {
+    expect(wrapper.find('main')).toHaveLength(1);
+  });
+
+  it('should render footer', () => {
+    expect(wrapper.find('footer')).toHaveLength(1);
+  }); */
+})

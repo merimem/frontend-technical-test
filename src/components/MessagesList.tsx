@@ -31,8 +31,6 @@ function MessagesList (props){
       setCurrentMessage("")
     } 
       
-   
-    console.log("urlAvatar ",urlAvatar)
     return(
          <ChatContainer>
              <ConversationHeader>
